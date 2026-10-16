@@ -1,136 +1,118 @@
-# King County Housing EDA Project Template
+# King County Housing EDA Project
 
-This is the starter template for the Exploratory Data Analysis (EDA) project. You will work with the King County housing dataset (home sales in and around Seattle, USA), uncover what drives house prices, and turn your findings into insights and recommendations for a client you choose.
+## Project overview
 
-## Learning Objectives
+This project explores historical residential property sales in King County, Washington (USA), with a focus on luxury waterfront properties.
 
-By the end of this repository, you should be able to:
+The goal is to use exploratory data analysis (EDA) to identify relevant market patterns and provide actionable recommendations for a fictional real estate client.
 
-- Connect to a PostgreSQL database from Python and load query results into a pandas DataFrame.
-- Frame an exploratory data analysis around clear research questions and hypotheses.
-- Clean and wrangle a real-world dataset by handling missing values, outliers, and feature transformations.
-- Explore distributions and the relationships between features and the target variable (price).
-- Translate your analysis into at least three insights and three client-specific recommendations.
-- Present your work to a non-technical audience.
+## Client: Jennifer Montgomery
 
-## Learning Path
+Jennifer is a prospective buyer with the following requirements:
 
-Work through the files in order. Start with the assignment to understand the goal, follow the workflow as your guide, fetch the data, then run your analysis in the EDA notebook.
+* High budget and preference for prestigious properties
+* Waterfront location
+* High construction quality (grade)
+* Preferably already renovated
+* Purchase within one month
+* Intention to resell within one year
 
-> [!TIP]
-> The data lives in the **eda** schema of the database and is split across two tables. Before fetching anything in code, connect with DBeaver and explore that schema: inspect both tables, check [**Column Names**](column_names.md) for what each field means, and work out how to join them. Once you have a working `JOIN`, use it as the query in [**03 - Fetching the Data**](03_fetching_the_data_eda.ipynb) to load the combined dataset into pandas.
+## Dataset and methodology
 
-| File / Folder                                                   | Description                                                                                                              |
-| --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| [**01 - Assignment**](01_assignment.md)                      | The project brief: the dataset, your tasks, deliverables, and the list of clients to choose from.                        |
-| [**02 - Workflow**](02_workflow.md)                          | A recommended EDA workflow, from understanding and questioning the data through cleaning, relationships, and presenting. |
-| [**03 - Fetching the Data**](03_fetching_the_data_eda.ipynb) | Connect to the PostgreSQL database with psycopg2 and SQLAlchemy, then pull the data into a pandas DataFrame.             |
-| [**04 - EDA**](04_eda.ipynb)                                 | Starter notebook for your exploratory data analysis.                                                                     |
-| [**Column Names**](column_names.md)                          | Data dictionary describing each column in the King County housing dataset.                                               |
+The project uses the King County Housing dataset, containing approximately 21,600 historical property sales.
 
-### Additional Folders and Files
+The data was retrieved from a PostgreSQL database by joining two tables, then explored using Python and pandas.
 
-| File / Folder                           | Description                                                                                    |
-| --------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| [**Data**](data/)                    | Where you save the dataset CSV. The folder is tracked, but its data files are kept out of git. |
-| [**.env.example**](.env.example)     | Template for the database credentials. Copy it to `.env` and fill in your values.            |
-| [**pyproject.toml**](pyproject.toml) | Project configuration and dependencies.                                                        |
-| [**uv.lock**](uv.lock)               | Dependency lock file.                                                                          |
+The analysis includes:
+* Data inspection and cleaning
+* Missing-value handling and feature engineering
+* Descriptive statistics and median price comparisons
+* Geographic analysis using ZIP codes
+* Data visualization with Matplotlib and Seaborn
 
-## Setup
+For the purpose of this analysis, luxury properties are defined as houses with a grade of at least 10.
 
-> [!NOTE]
-> Throughout these steps, text in angle brackets like `<repo-name>` is a **placeholder**. Replace it, including the `< >` brackets, with your own value. For example, `cd <repo-name>` becomes `cd ds-eda-project-template`.
+## Research questions and key findings
 
-### 1. Create the Repository from the Template
 
-Click **Use this template** on GitHub.
+1. How does waterfront access affect luxury property prices?
 
-When creating the repository:
+Among properties with grade 10 or higher:
+* Waterfront properties: $2.51M median sale price (57 transactions)
+* Non-waterfront properties: $1.01M median sale price
 
-- Set yourself as the **Owner**
-- Choose a repository name
-- Disable **Include all branches**
-- Click **Create repository**
+Recommendation: Jennifer should anticipate a substantial price premium for luxury waterfront properties and prepare for a relatively narrow selection.
 
-> [!IMPORTANT]
-> If you are working in pairs or groups, only **one person** should complete this step.
----
+2. Which areas have the most historical luxury waterfront transactions?
 
-### 2. Add Collaborators (Pairs/Groups Only)
+ZIP codes **98040** and **98008** have the highest numbers of recorded transactions matching the luxury waterfront criteria, with 8 and 7 sales respectively.
 
-If working with teammates:
+Recommendation: Prioritize these two ZIP codes when searching for suitable properties, while independently checking current listings and local resale conditions.
 
-1. Open the repository on GitHub
-2. Go to **Settings → Collaborators**
-3. Add your teammates as collaborators
-4. Share the repository link with your team
+Historical transaction counts alone do not establish market liquidity or guarantee a quick resale.
 
-Teammates should accept the invitation before continuing.
+3. Are renovated luxury homes more expensive?
 
----
+Among properties with grade 10 or higher:
+* Renovated properties: $1.66M median sale price (59 transactions)
+* Non-renovated properties or properties without recorded renovation: $1.01M median sale price (1,576 transactions)
 
-### 3. Clone the Repository
+The observed price difference generally persists when properties are grouped by living area, although some groups contain very few renovated properties.
 
-Copy the SSH URL from the **Code** button on GitHub, then run:
+Recommendation: Jennifer should prioritize already-renovated properties to meet her preferences and avoid immediate renovation work. However, she should evaluate the purchase price carefully, as a renovation premium does not guarantee profitable resale.
 
-```bash
-git clone <copied-ssh-url>
+## Limitations
+
+This analysis is exploratory and based on historical sales rather than current property listings.
+
+Important limitations include:
+* Historical sale prices do not predict future appreciation.
+* Transaction counts do not measure time on market.
+* Small sample sizes affect some luxury property comparisons.
+* Missing waterfront and renovation values were treated as negative or unrecorded.
+* Observed price differences do not establish causal relationships.*
+
+In particular, the dataset cannot establish whether Jennifer could profitably resell a property within one year.
+
+## Repository structure
+
+
+| File                                | Description                                                               |
+| :---                                | :---                                                                      |
+| `01_assignment.md`                  | Original project assignment and client descriptions                       |
+| `02_workflow.md`                    | Recommended EDA workflow                                                  |
+| `03_fetching_the_data_eda.ipynb`    | Database connection, SQL join and data retrieval                          |
+| `04_eda.ipynb`                      | Main exploratory analysis, visualizations, findings and recommendations   |
+| `column_names.md`                   | Dataset column descriptions                                               |
+| `data/`                             | Local dataset directory; CSV data is excluded from Git                    |
+| `pyproject.toml`                    | Python project configuration and dependencies                             |
+| `uv.lock`                           | Locked dependency versions                                                |
+
+## Running the project
+
+Clone the repository:
 ```
+git clone https://github.com/leopardb/ds-eda-project.git
+cd ds-eda-project
+```
+Install the Python dependencies:
 
-The copied SSH URL will look like `git@github.com:<your-username>/<repo-name>.git`.
-
----
-
-### 4. Move into the Project Folder and Install Dependencies
-
-This installs all dependencies and creates a virtual environment in `.venv/`.
-
-```bash
-cd <repo-name>
+```
 uv sync
 ```
 
-> [!TIP]
-> Need a library that is not installed yet (for example a mapping)? Add it with `uv add <package-name>`. This updates `pyproject.toml` and `uv.lock` and installs it into your `.venv`. Commit both files; teammates then run uv sync after pulling to get the same environment.
+The main analysis is contained in `04_eda.ipynb` and reads the locally stored dataset from `data/eda.csv`.
 
----
+The original dataset is not committed to GitHub. Reproducing the analysis requires obtaining the dataset and placing it at that path. The data-retrieval notebook documents the PostgreSQL extraction process.
 
-### 5. Set up your Database Credentials
+## Tools
 
-The data-fetching notebook reads the database connection details from a `.env` file. Copy the template and fill in your own values:
+Python · pandas · NumPy · Matplotlib · Seaborn · Jupyter Notebook · PostgreSQL · SQLAlchemy · Git
 
-```bash
-cp .env.example .env
-```
+## Conclusion
 
-Open `.env` and replace the placeholders with the credentials for the King County housing database (the same ones you use in DBeaver). These values feed [**03 - Fetching the Data**](03_fetching_the_data_eda.ipynb).
+Luxury waterfront properties command substantially higher historical sale prices, and certain ZIP codes show greater concentrations of matching transactions. Renovated luxury properties also tend to sell at higher prices.
 
-> [!CAUTION]
-> `.env` holds secrets and must never be committed. It is already listed in `.gitignore`. Only `.env.example`, with placeholder values, belongs in the repository.
+For Jennifer, the recommended approach is to focus on high-grade waterfront properties in ZIP codes 98040 and 98008, favor already-renovated homes, and carefully assess short-term resale risk before purchasing.
 
----
-
-### 6. Open the Notebooks
-
-> [!NOTE]
-> Make sure you open VS Code from the project root so it automatically detects the environment created by uv sync.
-
-Launch VS Code in the project root folder:
-
-```bash
-code .
-```
-
-Then open a notebook and select the Python environment created by `uv sync` as the kernel.
-
-## References & Further Reading
-
-- [**House Sales in King County dataset**](https://www.kaggle.com/datasets/harlfoxem/housesalesprediction): The source dataset, with column descriptions and community notebooks.
-- [**Pandas user guide**](https://pandas.pydata.org/docs/user_guide/index.html): The official guide to data manipulation with pandas.
-- [**Seaborn tutorial**](https://seaborn.pydata.org/tutorial.html): Statistical data visualization in Python.
-- [**SQLAlchemy documentation**](https://docs.sqlalchemy.org/en/20/): The database toolkit used to query PostgreSQL from Python.
-- [**Hypothesis generation for EDA**](https://www.analyticsvidhya.com/blog/2020/11/an-efficient-way-of-performing-eda-hypothesis-generation/): How to form research questions and hypotheses before diving into the data.
-- [**EDA Checklist**](https://github.com/neuefische/datascience-infographics/blob/main/EDA_Checklist.md): A phase-by-phase checklist for working through an exploratory analysis.
-- [**Detailed EDA with Python**](https://www.kaggle.com/code/ekami66/detailed-exploratory-data-analysis-with-python): A worked example of a thorough EDA notebook on real data.
-- [**Tips for data science presentations**](https://www.dataknowsall.com/storytelling.html): Storytelling techniques for presenting results to a non-technical audience.
+The central finding is that prestige can be identified and priced using historical data, but profitable resale within one year cannot be guaranteed.
