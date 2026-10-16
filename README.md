@@ -70,7 +70,7 @@ Important limitations include:
 * Transaction counts do not measure time on market.
 * Small sample sizes affect some luxury property comparisons.
 * Missing waterfront and renovation values were treated as negative or unrecorded.
-* Observed price differences do not establish causal relationships.*
+* Observed price differences do not establish causal relationships.
 
 In particular, the dataset cannot establish whether Jennifer could profitably resell a property within one year.
 
